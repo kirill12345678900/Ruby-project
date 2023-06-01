@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Выбор секций</title>
+  <style>
+      .section {
+          display: none;
+      }
+
+      .active {
+          display: block;
+      }
+  </style>
+  <script>
+      function showSection(sectionName) {
+          var sections = document.getElementsByClassName("section");
+          for (var i = 0; i < sections.length; i++) {
+              sections[i].style.display = "none";
+          }
+
+          var selectedSection = document.getElementById(sectionName);
+          selectedSection.style.display = "block";
+      }
+  </script>
+</head>
+<body>
+<div style="text-align: center; margin-top: 200px">
+  <button onclick="showSection('me')">Me</button>
+  <button onclick="showSection('events')">Events</button>
+  <button onclick="showSection('categories')">Categories</button>
+</div>
+
+<div id="me" class="section active" style="text-align: center; margin-top: 20px">
+  <h2>Привет, <%= @user.name %></h2>
+  <h2>Предстоящие события</h2>
+  <p>Количество предстоящих событий: <%= @upcoming_events_count %></p>
+  <p>Количество событий на сегодня: <%= @today_events_count %></p>
+</div>
+
+<div id="events" class="section" style="text-align: center; margin-top: 20px">
+  <h2>События пользователя</h2>
+
+  <table>
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Название</th>
+      <th>Дата</th>
+      <th>Категория</th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @user.events.each do |event| %>
+      <tr>
+        <td><%= event.id %></td>
+        <td><%= link_to event.name, event_path(event) %></td>
+        <td><%= event.date %></td>
+        <td><%= event.category %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+
+  <%= link_to 'Create new event', new_event_path %>
+</div>
+
+<div id="categories" class="section" style="text-align: center; margin-top: 20px">
+  <h2>Секция Categories</h2>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<div class="text-center" style="margin-top: 50px">
+  <h2>Forgot your password?</h2>
+
+  <div class="container d-flex justify-content-center">
+    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post, class: "text-center" }) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+
+      <div class="form-group" style="margin-bottom: 10px; margin-top: 10px">
+        <%= f.label :email %><br />
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control smaller-input" %>
+      </div>
+
+      <div class="actions" style="margin-bottom: 10px">
+        <%= f.submit "Send me reset password instructions", class: "btn btn-dark btn-sm" %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<style>
+    .smaller-input {
+        max-width: 300px;
+    }
+</style>
+<%= render "devise/shared/links" %>

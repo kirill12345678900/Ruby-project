@@ -1,0 +1,15 @@
+<h2 style="color: #B00100; margin: 0 auto">Edit item <%= @event.name %> </h2>
+<br/>
+
+<%= form_for @event, url: event_path(@event), method: :put do |form| %>
+  <%= form.label :name %>
+  <%= form.text_field :name %>
+
+  <%= form.label :date %>
+  <%= form.date_field :date %>
+
+  <%= form.label :description %>
+  <%= form.text_field :description %>
+
+  <%= form.submit "Update", class: "btn btn-large btn-primary" %>
+<% end %>

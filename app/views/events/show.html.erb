@@ -1,0 +1,12 @@
+<h2 style="color: #B00100; margin: 0 auto">Show event</h2>
+
+<ul>
+  <li>Name: <%= @event.name %> </li>
+  <li>Date: <%= @event.date %> </li>
+  <li>Description: <%= @event.description %></li>
+</ul>
+
+<br/>
+
+<%= link_to 'Edit', edit_event_path(@event) %>
+<%= button_to "delete #{@event.name}",event_path(@event), method: :delete %>
