@@ -1,0 +1,30 @@
+<h2 style="color: #B00100; margin: 0 auto">Search events by category</h2>
+<br/>
+<%= form_tag search_by_category_events_path, method: :get do %>
+  <%= label_tag :search_term, "Search by Category Name" %>
+  <%= text_field_tag :search_term, params[:search_term] %>
+  <%= submit_tag "Search", class: "btn btn-large btn-primary" %>
+<% end %>
+
+<br/>
+
+<table>
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Название</th>
+    <th>Дата</th>
+    <th>Категория</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @events.each do |event| %>
+    <tr>
+      <td><%= event.id %></td>
+      <td><%= link_to event.name, event_path(event) %></td>
+      <td><%= event.date %></td>
+      <td><%= event.category %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
