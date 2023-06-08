@@ -8,5 +8,14 @@
 
 <br/>
 
+<% if @weather %>
+  <h3>Погодные условия</h3>
+  <ul>
+    <li>Температура: <%= (@weather.dig('main', 'temp') - 273.15).round(2) %>°C</li>
+  </ul>
+<% else %>
+  <p>Погода недоступна.</p>
+<% end %>
+
 <%= link_to 'Edit', edit_event_path(@event) %>
-<%= button_to "delete #{@event.name}",event_path(@event), method: :delete %>
+<%= button_to "Delete #{@event.name}", event_path(@event), method: :delete %>

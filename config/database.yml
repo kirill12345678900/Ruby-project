@@ -9,10 +9,10 @@ default: &default
 
 development:
   <<: *default
-  database: my_fucking_project_development
+  database: my_lovely_project_development
 
 
 test:
   <<: *default
-  database: my_fucking_project_test
+  database: my_lovely_project_test
 

@@ -50,7 +50,7 @@
     </tr>
     </thead>
     <tbody>
-    <% @user.events.each do |event| %>
+    <% @paginated_events.each do |event| %>
       <tr>
         <td><%= event.id %></td>
         <td><%= link_to event.name, event_path(event) %></td>
@@ -61,12 +61,15 @@
     </tbody>
   </table>
 
+  <%= paginate @paginated_events %>
+
   <%= link_to 'Create new event', new_event_path %>
+  <%= link_to 'Search', search_events_path %>
+  <%= link_to 'Search_by_category', search_by_category_events_path %>
 </div>
 
 <div id="categories" class="section" style="text-align: center; margin-top: 20px">
   <h2>Секция Categories</h2>
-
 </div>
 </body>
 </html>

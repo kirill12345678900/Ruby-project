@@ -1,7 +1,9 @@
+require 'geocoder'
+
 class EventsController < ApplicationController
   skip_before_action :verify_authenticity_token
-  def index
 
+  def index
   end
 
   def new
@@ -10,6 +12,7 @@ class EventsController < ApplicationController
 
   def show
     @event = Event.find(params[:id])
+    @weather = get_weather
   end
 
   def create
@@ -51,10 +54,37 @@ class EventsController < ApplicationController
     end
   end
 
+  def search
+    @user = current_user
+    @events = if params[:search_term]
+                @user.events.where("name LIKE ?", "%#{params[:search_term]}%")
+              else
+                @user.events
+              end
+  end
+
+  def search_by_category
+    @user = current_user
+    if params[:search_term]
+      @events = @user.events.joins(:category).where("categories.name LIKE ?", "%#{params[:search_term]}%")
+    else
+      @events = @user.events
+    end
+  end
 
   private
 
   def event_params
     params.require(:event).permit(:name, :date, :description, :user_id, :category_id)
   end
+
+  def get_weather
+    api_key = 'fc5c5b79bb4822c5f03b82a3a926b1fe'
+    response = HTTParty.get("https://api.openweathermap.org/data/2.5/weather?q=minsk&appid=#{api_key}")
+    if response.code == 200
+      weather_data = JSON.parse(response.body)
+      return weather_data
+    end
+  end
+
 end
