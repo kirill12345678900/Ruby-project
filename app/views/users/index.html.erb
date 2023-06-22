@@ -1,3 +1,4 @@
+<!-- app/views/events/index.html.erb -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,23 +40,40 @@
 
 <div id="events" class="section" style="text-align: center; margin-top: 20px">
   <h2>События пользователя</h2>
+  <h1>Search Events</h1>
+
+  <%= form_tag(users_path, method: :get, id: "search-form") do %>
+    <div>
+      <%= label_tag :search, 'Event Name' %>
+      <%= text_field_tag :search, params[:search] %>
+    </div>
+
+    <div>
+      <%= label_tag :category_id, 'Category' %>
+      <%= select_tag :category_id, options_from_collection_for_select(@categories, :name, :name, params[:category_id]), include_blank: true %>
+    </div>
+
+    <%= submit_tag 'Search' %>
+  <% end %>
+
+  <h2>Results</h2>
 
   <table>
     <thead>
     <tr>
-      <th>ID</th>
-      <th>Название</th>
-      <th>Дата</th>
-      <th>Категория</th>
+      <th>Name</th>
+      <th>Date</th>
+      <th>Description</th>
+      <th>Category</th>
     </tr>
     </thead>
     <tbody>
     <% @paginated_events.each do |event| %>
       <tr>
-        <td><%= event.id %></td>
-        <td><%= link_to event.name, event_path(event) %></td>
+        <td><%= event.name %></td>
         <td><%= event.date %></td>
-        <td><%= event.category %></td>
+        <td><%= event.description %></td>
+        <td><%= event.category.name if event.category %></td>
       </tr>
     <% end %>
     </tbody>
@@ -63,9 +81,11 @@
 
   <%= paginate @paginated_events %>
 
-  <%= link_to 'Create new event', new_event_path %>
-  <%= link_to 'Search', search_events_path %>
-  <%= link_to 'Search_by_category', search_by_category_events_path %>
+  <div style="text-align: center; margin-top: 20px">
+    <%= link_to 'Create new event', new_event_path %>
+    <%= link_to 'Search', search_events_path %>
+    <%= link_to 'Search by category', search_by_category_events_path %>
+  </div>
 </div>
 
 <div id="categories" class="section" style="text-align: center; margin-top: 20px">
